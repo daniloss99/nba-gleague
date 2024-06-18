@@ -1,0 +1,24 @@
+version: 2
+
+models:
+  - name: players
+    description: Table containing the current season players information.
+
+    columns:
+      - name: person_id
+        description: 'Unique identifier for the player'
+        tests:
+          - not_null
+
+      - name: rosterstatus
+        description: 'Roster status of the player'
+        tests:
+          - accepted_values:
+              values: [1]
+              severity: warn
+
+      - name: to_year
+        description: 'Year the player ended'
+        tests:
+          - dbt_utils.expression_is_true:
+              expression: ">= YEAR(ingestion_date) - 1"

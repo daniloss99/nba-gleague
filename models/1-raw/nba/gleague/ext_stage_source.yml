@@ -1,0 +1,195 @@
+version: 2
+
+sources:
+  - name: nba_gleague_external
+    database: nba
+    schema: gleague_raw
+    loader: S3
+    
+    tables:
+      - name: ext_players
+        ext_full_refresh: true
+        description:  Table containing the current season players information. 
+        external:
+          location: "@nba_external_stage/players"
+          file_format: "( type = parquet, compression = auto, binary_as_text = true )"
+          pattern: ".*part-.*.parquet"
+
+        columns:
+          - name: PERSON_ID
+            description: 'Unique identifier for the player'
+            data_type: NUMBER
+
+          - name: DISPLAY_LAST_COMMA_FIRST
+            description: 'Player name in Last, First format'
+            data_type: STRING
+
+          - name: DISPLAY_FIRST_LAST
+            description: 'Player name in First Last format'
+            data_type: STRING
+
+          - name: ROSTERSTATUS
+            description: 'Roster status of the player'
+            data_type: NUMBER
+
+          - name: FROM_YEAR
+            description: 'Year the player started'
+            data_type: STRING
+
+          - name: TO_YEAR
+            description: 'Year the player ended'
+            data_type: STRING
+
+          - name: PLAYERCODE
+            description: 'Player code'
+            data_type: STRING
+
+          - name: PLAYER_SLUG
+            description: 'Player slug'
+            data_type: STRING
+
+          - name: TEAM_ID
+            description: 'Team identifier'
+            data_type: NUMBER
+
+          - name: TEAM_CITY
+            description: 'City of the team'
+            data_type: STRING
+
+          - name: TEAM_NAME
+            description: 'Name of the team'
+            data_type: STRING
+
+          - name: TEAM_ABBREVIATION
+            description: 'Team abbreviation'
+            data_type: STRING
+
+          - name: TEAM_SLUG
+            description: 'Team slug'
+            data_type: STRING
+
+          - name: TEAM_CODE
+            description: 'Team code'
+            data_type: STRING
+
+          - name: GAMES_PLAYED_FLAG
+            description: 'Flag indicating games played'
+            data_type: STRING
+
+          - name: OTHERLEAGUE_EXPERIENCE_CH
+            description: 'Other league experience'
+            data_type: STRING
+
+          - name: INGESTION_DATE
+            description: Date in which the file was ingested.
+            data_type: DATE
+
+
+      - name: ext_stats
+        ext_full_refresh: true
+        description:  Table containing the career totals statistics for regular season for each player.
+        external:
+          location: "@nba_external_stage/stats"
+          file_format: "( type = parquet, compression = auto, binary_as_text = true )"
+          pattern: ".*part-.*.parquet"
+
+        columns:
+          - name: PERSON_ID
+            description: 'Unique identifier for the player'
+            data_type: NUMBER
+
+          - name: LEAGUE_ID
+            description: 'League identifier'
+            data_type: STRING
+
+          - name: Team_ID
+            description: 'Team identifier'
+            data_type: NUMBER
+
+          - name: GP
+            description: 'Games played'
+            data_type: NUMBER
+
+          - name: GS
+            description: 'Games started'
+            data_type: NUMBER
+
+          - name: MIN
+            description: 'Minutes played'
+            data_type: FLOAT
+
+          - name: FGM
+            description: 'Field goals made'
+            data_type: NUMBER
+
+          - name: FGA
+            description: 'Field goals attempted'
+            data_type: NUMBER
+
+          - name: FG_PCT
+            description: 'Field goal percentage'
+            data_type: FLOAT
+
+          - name: FG3M
+            description: 'Three-point field goals made'
+            data_type: NUMBER
+
+          - name: FG3A
+            description: 'Three-point field goals attempted'
+            data_type: NUMBER
+
+          - name: FG3_PCT
+            description: 'Three-point field goal percentage'
+            data_type: FLOAT
+
+          - name: FTM
+            description: 'Free throws made'
+            data_type: NUMBER
+
+          - name: FTA
+            description: 'Free throws attempted'
+            data_type: NUMBER
+
+          - name: FT_PCT
+            description: 'Free throw percentage'
+            data_type: FLOAT
+
+          - name: OREB
+            description: 'Offensive rebounds'
+            data_type: NUMBER
+
+          - name: DREB
+            description: 'Defensive rebounds'
+            data_type: NUMBER
+
+          - name: REB
+            description: 'Total rebounds'
+            data_type: NUMBER
+
+          - name: AST
+            description: 'Assists'
+            data_type: NUMBER
+
+          - name: STL
+            description: 'Steals'
+            data_type: NUMBER
+
+          - name: BLK
+            description: 'Blocks'
+            data_type: NUMBER
+
+          - name: TOV
+            description: 'Turnovers'
+            data_type: NUMBER
+
+          - name: PF
+            description: 'Personal fouls'
+            data_type: NUMBER
+
+          - name: PTS
+            description: 'Points'
+            data_type: NUMBER
+
+          - name: INGESTION_DATE
+            description: Date in which the file was ingested.
+            data_type: DATE
