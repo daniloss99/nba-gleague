@@ -4,5 +4,5 @@
     ) 
 }}
 
-select {{ dbt_utils.star(from=source('nba_gleague_raw', 'ext_players'), except=['value']) }}
-from {{ source('nba_gleague_raw', 'ext_players') }}
+select {{ dbt_utils.star(from=source('nba_gleague_external', 'ext_players'), except=['value']) }}
+from {{ source('nba_gleague_external', 'ext_players') }}
