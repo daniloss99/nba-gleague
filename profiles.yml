@@ -1,0 +1,14 @@
+gemini:
+  target: dev
+  outputs:
+    dev:
+      type: snowflake
+      account: <snowflake-account-id>
+      user: <user>
+      password: <password>
+      role: <role>
+      database: <database>
+      schema: <schema>
+      warehouse: <warehouse>
+      threads: 5
+      client_session_keep_alive: false
